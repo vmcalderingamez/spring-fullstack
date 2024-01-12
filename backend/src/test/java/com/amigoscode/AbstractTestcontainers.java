@@ -13,8 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @Testcontainers
 public abstract class AbstractTestcontainers {
 

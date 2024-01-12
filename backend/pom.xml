@@ -148,12 +148,12 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.4.0</version>
                 <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
                 </executions>
                 <configuration>
                     <from>
@@ -165,7 +165,7 @@
                             <password>Ino.12345</password>
                         </auth>
                         <image>
-                            docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}
+                            docker.io/${docker.username}/${docker.image.name}:2
                         </image>
                     </to>
                 </configuration>
