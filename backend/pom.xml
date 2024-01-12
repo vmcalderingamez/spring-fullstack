@@ -165,7 +165,7 @@
                             <password>Ino.12345</password>
                         </auth>
                         <image>
-                            docker.io/${docker.username}/${docker.image.name}:2
+                            docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}
                         </image>
                     </to>
                 </configuration>
