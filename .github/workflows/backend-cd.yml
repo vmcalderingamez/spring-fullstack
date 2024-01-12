@@ -30,11 +30,21 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
+      - name: Send Start Deployment Slack
+        run: > 
+          curl -X POST -H 'Content-type: application/json'
+          --data '{"text":"Deployment started :progress_bar:"}' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
           cache: 'maven'
+      - name: Send Building Maven Slack
+        run: >
+          curl -X POST -H 'Content-type: application/json'
+          --data '{"text":":apache_maven: Building with Maven" 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -45,3 +55,8 @@ jobs:
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -e -D docker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
+      - name: Send Pushed Image on Docker Slack
+        run: >
+          curl -X POST -H 'Content-type: application/json'
+          --data '{"text":":docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} successfully pushed to Hub.Docker"}' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
