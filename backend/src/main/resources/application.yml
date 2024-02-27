@@ -9,7 +9,7 @@ cors:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://localhost:5422/customer
     username: amigoscode
     password: password
 

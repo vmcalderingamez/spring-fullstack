@@ -39,8 +39,8 @@ class CustomerServiceTest {
     void canGetCustomer() {
         Integer id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 2
-        );
+                id, "Alex", "alex@gmail.com", 2,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -68,7 +68,7 @@ class CustomerServiceTest {
         when(customerDao.existPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19, Gender.MALE
         );
 
         underTest.addCustomer(request);
@@ -94,7 +94,7 @@ class CustomerServiceTest {
         when(customerDao.existPersonWithEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19, Gender.MALE
         );
 
         assertThatThrownBy(() -> underTest.addCustomer(request))
@@ -133,14 +133,14 @@ class CustomerServiceTest {
     void canUpdateAllTheCustomerProperties() {
         Integer id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@gmail.com";
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                "Alexandro", newEmail, 23
+                "Alexandro", newEmail, 23, Gender.MALE
         );
 
         when(customerDao.existPersonWithEmail(newEmail)).thenReturn(false);
@@ -163,13 +163,13 @@ class CustomerServiceTest {
         Integer id = 10;
 
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                "Alexandro", null, null
+                "Alexandro", null, null, null
         );
 
         underTest.updateCustomer(updateRequest, id);
@@ -190,14 +190,14 @@ class CustomerServiceTest {
         Integer id = 10;
 
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@gmail.com";
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                null, newEmail, null
+                null, newEmail, null, null
         );
 
         when(customerDao.existPersonWithEmail(newEmail)).thenReturn(false);
@@ -220,13 +220,13 @@ class CustomerServiceTest {
         Integer id = 10;
 
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                null, null, 23
+                null, null, 23, null
         );
 
         underTest.updateCustomer(updateRequest, id);
@@ -247,14 +247,14 @@ class CustomerServiceTest {
         Integer id = 10;
 
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@gmail.com";
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                null, newEmail, null
+                null, newEmail, null, null
         );
 
         when(customerDao.existPersonWithEmail(newEmail)).thenReturn(true);
@@ -271,13 +271,13 @@ class CustomerServiceTest {
     void willThrowWhenCustomerUpdateHasNoChanges() {
         Integer id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
 
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                customer.getName(), customer.getEmail(), customer.getAge()
+                customer.getName(), customer.getEmail(), customer.getAge(), customer.getGender()
         );
 
         assertThatThrownBy(() -> underTest.updateCustomer(updateRequest, id))

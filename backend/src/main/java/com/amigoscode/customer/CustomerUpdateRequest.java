@@ -6,6 +6,7 @@ import java.util.List;
 public record CustomerUpdateRequest(
         String name,
         String email,
-        Integer age
+        Integer age,
+        Gender gender
 ) {
 }
